@@ -8,4 +8,21 @@ class ListingGoalsTest < ActionDispatch::IntegrationTest
     assert_equal 200, response.status
     refute_empty response.body
   end
+
+  test 'returns goals filtered by is_complete' do 
+    goal1 = Goal.create!(is_complete: true)
+    goal2 = Goal.create!(is_complete: false)
+
+    get '/goals?is_complete=true'
+    assert_equal 200, response.status
+
+    goals = JSON.parse(response.body, symbolize_names: true)
+    goals_list = goals.collect { |g| g[:is_complete] }
+    assert_includes goals_list, true
+    refute_includes goals_list, false
+  end
+
+  # test 'returns goal by id' do 
+    
+  # end
 end
