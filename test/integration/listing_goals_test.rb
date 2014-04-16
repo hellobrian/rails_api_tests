@@ -16,8 +16,8 @@ class ListingGoalsTest < ActionDispatch::IntegrationTest
     get '/goals?is_complete=true'
     assert_equal 200, response.status
 
-    goals = JSON.parse(response.body, symbolize_names: true)
-    goals_list = goals.collect { |g| g[:is_complete] }
+    goals_response = json(response.body)
+    goals_list = goals_response.collect { |g| g[:is_complete] }
     assert_includes goals_list, true
     refute_includes goals_list, false
   end
@@ -27,7 +27,7 @@ class ListingGoalsTest < ActionDispatch::IntegrationTest
     get "/goals/#{goal1.id}"
     assert_equal 200, response.status
 
-    goal_response = JSON.parse(response.body, symbolize_names: true)
+    goal_response = json(response.body)
     assert_equal goal1.description, goal_response[:description]
   end
 end
