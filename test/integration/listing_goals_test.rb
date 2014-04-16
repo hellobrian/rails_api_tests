@@ -22,7 +22,12 @@ class ListingGoalsTest < ActionDispatch::IntegrationTest
     refute_includes goals_list, false
   end
 
-  # test 'returns goal by id' do 
-  #   goal1 = goals(:one)
-  # end
+  test 'returns goal by id' do 
+    goal1 = goals(:one)
+    get "/goals/#{goal1.id}"
+    assert_equal 200, response.status
+
+    goal_response = JSON.parse(response.body, symbolize_names: true)
+    assert_equal goal1.description, goal_response[:description]
+  end
 end
