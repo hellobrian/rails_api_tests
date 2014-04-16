@@ -6,6 +6,9 @@ module API
     # GET /goals.json
     def index
       goals = Goal.all
+      if is_complete = params[:is_complete]
+        goals = goals.where(is_complete: is_complete)
+      end
       render json: goals, status: 200
     end
 
