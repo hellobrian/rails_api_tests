@@ -15,6 +15,8 @@ module API
     # GET /goals/1
     # GET /goals/1.json
     def show
+      goal = Goal.find(params[:id])
+      render json: goal, status: 200
     end
 
     # GET /goals/new
