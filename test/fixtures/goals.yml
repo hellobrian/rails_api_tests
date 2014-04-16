@@ -4,8 +4,10 @@ one:
   description: MyString
   motivation: MyString
   completion_date: 2014-04-16
+  is_complete: true
 
 two:
   description: MyString
   motivation: MyString
   completion_date: 2014-04-16
+  is_complete: false

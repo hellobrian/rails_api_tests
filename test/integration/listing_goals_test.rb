@@ -10,8 +10,8 @@ class ListingGoalsTest < ActionDispatch::IntegrationTest
   end
 
   test 'returns goals filtered by is_complete' do 
-    goal1 = Goal.create!(is_complete: true)
-    goal2 = Goal.create!(is_complete: false)
+    goal1 = goals(:one)
+    goal2 = goals(:two)
 
     get '/goals?is_complete=true'
     assert_equal 200, response.status
@@ -23,6 +23,6 @@ class ListingGoalsTest < ActionDispatch::IntegrationTest
   end
 
   # test 'returns goal by id' do 
-    
+  #   goal1 = goals(:one)
   # end
 end
