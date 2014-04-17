@@ -4,19 +4,14 @@ class CreatingGoalsTest < ActionDispatch::IntegrationTest
 
   setup { 
     host! 'api.example.com' 
-    # @empty_goal = goals(:empty)
-    # @nil_goal = goals(:nil)
-    # @goal = goals(:one)
+    @goal = build(:goal)
+    @nil_goal = build(:goal, motivation: nil)
   }
 
   test 'creates goals' do 
     post '/goals', 
-    { goal: 
-      { description: "my description", motivation: "my motivation", 
-        completion_date: "2015-01-01", is_complete: false 
-      }
-    }.to_json, 
-    { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+      @goal.to_json,
+      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
 
     assert_equal 201, response.status
     assert_equal Mime::JSON, response.content_type
@@ -25,12 +20,13 @@ class CreatingGoalsTest < ActionDispatch::IntegrationTest
     assert_equal response.location, api_goal_url(goal[:id])
   end
 
-  # test 'does not create goals with nil fields' do 
-  #   post '/goals', 
-  #   { goal: 
-  #     { description: nil, motivation: nil, 
-  #       completion_date: nil, is_complete: nil 
-  #     }
-  #   }
-  # end
+  test 'does not create goals with nil motivation' do 
+    
+    post '/goals', 
+      @nil_goal.to_json,
+      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+
+    assert_equal 422, response.status
+    assert_equal Mime::JSON, response.content_type
+  end
 end

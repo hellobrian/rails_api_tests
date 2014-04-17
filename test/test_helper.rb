@@ -9,6 +9,8 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  include FactoryGirl::Syntax::Methods
+
   def json(body)
     JSON.parse(body, symbolize_names: true)
   end
