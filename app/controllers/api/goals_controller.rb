@@ -27,6 +27,10 @@ class API::GoalsController < ApplicationController
   end
 
   def update
+    goal = Goal.find(params[:id])
+    if goal.update(goal_params)
+      render json: goal, status: 200
+    end
   end
 
   def destroy
