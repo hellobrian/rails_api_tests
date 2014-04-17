@@ -23,6 +23,8 @@ class API::GoalsController < ApplicationController
     goal = Goal.new(goal_params)
     if goal.save
       render json: goal, status: 201, location: api_goal_url(goal[:id])
+    else
+      render json: goal.errors, status: 422
     end
   end
 
