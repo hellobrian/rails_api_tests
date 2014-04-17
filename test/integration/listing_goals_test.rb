@@ -2,19 +2,18 @@ require 'test_helper'
 
 class ListingGoalsTest < ActionDispatch::IntegrationTest
   setup { host! 'api.example.com' }
+  fixtures :goals
 
   test 'returns list of all goals' do
     get '/goals'
-    assert_equal 200, response.status
+    assert_response :success
     refute_empty response.body
   end
 
   test 'returns goals filtered by is_complete' do 
-    goal1 = goals(:one)
-    goal2 = goals(:two)
 
     get '/goals?is_complete=true'
-    assert_equal 200, response.status
+    assert_response :success
 
     goals_response = json(response.body)
     goals_list = goals_response.collect { |g| g[:is_complete] }
@@ -23,17 +22,17 @@ class ListingGoalsTest < ActionDispatch::IntegrationTest
   end
 
   test 'returns goal by id' do 
-    goal1 = goals(:one)
-    get "/goals/#{goal1.id}"
-    assert_equal 200, response.status
+    goal = goals(:one)
+    get "/goals/#{goal.id}"
+    assert_response :success
 
     goal_response = json(response.body)
-    assert_equal goal1.description, goal_response[:description]
+    assert_equal goal.description, goal_response[:description]
   end
 
   test 'returns goals in JSON' do 
     get '/goals', {}, { 'Accept' => Mime::JSON }
-    assert_equal 200, response.status
+    assert_response :success
     assert_equal Mime::JSON, response.content_type
   end
 
