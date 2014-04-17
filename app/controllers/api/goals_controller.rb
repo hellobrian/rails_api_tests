@@ -8,7 +8,13 @@ class API::GoalsController < ApplicationController
     if is_complete = params[:is_complete]
       goals = goals.where(is_complete: is_complete)
     end
-    render json: goals, status: 200
+    render json: goals, status: 200 
+    
+    # respond_to do |format|
+    #   format.json { render json: goals, status: 200 }
+    #   format.xml { render xml: goals, status: 200 } 
+    # end
+    
   end
 
   # GET /goals/1
