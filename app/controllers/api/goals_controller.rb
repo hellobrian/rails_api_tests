@@ -32,6 +32,8 @@ class API::GoalsController < ApplicationController
     goal = Goal.find(params[:id])
     if goal.update(goal_params)
       render json: goal, status: 200
+    else
+      render json: goal.errors, status: 422
     end
   end
 
