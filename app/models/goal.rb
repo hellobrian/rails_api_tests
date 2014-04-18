@@ -1,3 +1,3 @@
 class Goal < ActiveRecord::Base
-  validates :motivation, presence: true
+  validates :description, :motivation, presence: true
 end
