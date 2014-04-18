@@ -16,11 +16,11 @@ class UpdatingGoalsTest < ActionDispatch::IntegrationTest
     assert_equal "first motivation edit", @goal.reload.motivation
   end
 
-  # test 'unsuccessful update on empty motivation' do 
-  #   patch "/goals/#{ @goal.id }", 
-  #     { goal: { motivation: '' } }.to_json,
-  #     { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+  test 'unsuccessful update on empty motivation' do 
+    patch "/goals/#{ @goal.id }", 
+      { goal: { motivation: '' } }.to_json,
+      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
 
-  #   assert_equal 422, response.status
-  # end
+    assert_equal 422, response.status
+  end
 end
